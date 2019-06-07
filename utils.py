@@ -8,5 +8,5 @@ def get_collection(collection_name):
   } [collection_name]
 
 def prepare_doubt_output(document):
-  output = { 'doubt': document['doubt'], 'answer': document['answer'] }
+  output = { '_id': str(document['_id']), 'doubt': document['doubt'], 'answer': document['answer'] }
   return jsonify({ 'result': output })
