@@ -2,14 +2,18 @@
 from config import app
 
 #Add a __init__.py inside models folder
-from models.doubt import get_doubts, create_doubt
+from models.doubt import get_doubts, get_specific_doubt, create_doubt
 
 @app.route('/doubts', methods=['GET'])
-def get():
+def _get_doubts():
   return get_doubts()
 
+@app.route('/doubts/<string:doubt>')
+def _get_specific_doubt(doubt):
+  return get_specific_doubt(doubt)
+
 @app.route('/doubts', methods=['POST'])
-def post():
+def _create_doubt():
   return create_doubt()
 
 if __name__ == '__main__':
