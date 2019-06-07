@@ -14,7 +14,9 @@ def get_doubts():
 
 def get_specific_doubt(doubt):
   documents = get_collection('doubts')
-  document = documents.find_one({ 'doubt': doubt })
+
+  query = { 'doubt': doubt }
+  document = documents.find_one(query)
   if document:
     return prepare_doubt_output(document), 200
   else:
@@ -32,7 +34,8 @@ def create_doubt():
     }
     document_id = documents.insert(document)
 
-    inserted_document = documents.find_one({ '_id': document_id })
+    query = { '_id': document_id }
+    inserted_document = documents.find_one(query)
     return prepare_doubt_output(inserted_document), 201
   else:
     return 'Bad request', 400
