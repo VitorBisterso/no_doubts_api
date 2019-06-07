@@ -1,4 +1,5 @@
 from flask import jsonify, request
+from bson.objectid import ObjectId
 import json
 
 from utils import get_documents, prepare_doubt_output
@@ -7,7 +8,7 @@ def get_doubts():
   documents = get_documents('doubts')
   output = []
   for document in documents.find({}):
-    output.append({ 'doubt': document['doubt'], 'answer': document['answer'] })
+    output.append({ '_id': str(document['_id']), 'doubt': document['doubt'], 'answer': document['answer'] })
 
   return jsonify({ 'result': output }), 200
 
@@ -31,7 +32,21 @@ def create_doubt():
     }
     document_id = documents.insert(document)
 
-    inserted_document = documents.find_one({ "_id": document_id })
+    inserted_document = documents.find_one({ '_id': document_id })
     return prepare_doubt_output(inserted_document), 201
+  else:
+    return 'Bad request', 400
+
+def update_doubt(id):
+  doubt = request.json.get('doubt')
+  answer = request.json.get('answer')
+
+  if isinstance(doubt, basestring) and isinstance(answer, basestring):
+    documents = get_documents('doubts')
+    query = { '_id': ObjectId(id) }
+    new_values = {'$set': { 'doubt': doubt, 'answer': answer } }
+
+    documents.update_one(query, new_values, upsert=True)
+    return 'Accepted', 202
   else:
     return 'Bad request', 400

@@ -2,7 +2,7 @@
 from config import app
 
 #Add a __init__.py inside models folder
-from models.doubt import get_doubts, get_specific_doubt, create_doubt
+from models.doubt import get_doubts, get_specific_doubt, create_doubt, update_doubt
 
 @app.route('/doubts', methods=['GET'])
 def _get_doubts():
@@ -15,6 +15,10 @@ def _get_specific_doubt(doubt):
 @app.route('/doubts', methods=['POST'])
 def _create_doubt():
   return create_doubt()
+
+@app.route('/doubts/<string:id>', methods=['PUT'])
+def _update_doubt(id):
+  return update_doubt(id)
 
 if __name__ == '__main__':
   app.run(debug=True)
