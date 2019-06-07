@@ -2,7 +2,7 @@ from flask import jsonify
 
 from config import mongo
 
-def get_documents(collection_name):
+def get_collection(collection_name):
   return {
     'doubts': mongo.db.doubts,
   } [collection_name]

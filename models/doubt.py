@@ -2,10 +2,10 @@ from flask import jsonify, request
 from bson.objectid import ObjectId
 import json
 
-from utils import get_documents, prepare_doubt_output
+from utils import get_collection, prepare_doubt_output
 
 def get_doubts():
-  documents = get_documents('doubts')
+  documents = get_collection('doubts')
   output = []
   for document in documents.find({}):
     output.append({ '_id': str(document['_id']), 'doubt': document['doubt'], 'answer': document['answer'] })
@@ -13,7 +13,7 @@ def get_doubts():
   return jsonify({ 'result': output }), 200
 
 def get_specific_doubt(doubt):
-  documents = get_documents('doubts')
+  documents = get_collection('doubts')
   document = documents.find_one({ 'doubt': doubt })
   if document:
     return prepare_doubt_output(document), 200
@@ -25,7 +25,7 @@ def create_doubt():
   answer = request.json.get('answer')
 
   if isinstance(doubt, basestring) and isinstance(answer, basestring):
-    documents = get_documents('doubts')
+    documents = get_collection('doubts')
     document = {
       'doubt': doubt,
       'answer': answer,
@@ -42,7 +42,7 @@ def update_doubt(id):
   answer = request.json.get('answer')
 
   if isinstance(doubt, basestring) and isinstance(answer, basestring):
-    documents = get_documents('doubts')
+    documents = get_collection('doubts')
     query = { '_id': ObjectId(id) }
     new_values = {'$set': { 'doubt': doubt, 'answer': answer } }
 
@@ -50,3 +50,13 @@ def update_doubt(id):
     return 'Accepted', 202
   else:
     return 'Bad request', 400
+
+def delete_doubt(id):
+  documents = get_collection('doubts')
+  query = { '_id': ObjectId(id) }
+
+  if documents.find_one(query):
+    documents.remove(query)
+    return 'Accepted', 202
+  else:
+    return 'Not found', 404
