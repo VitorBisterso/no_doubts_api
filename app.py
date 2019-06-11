@@ -1,8 +1,7 @@
 #Add a config file to run the server
 from config import app
 
-#Add a __init__.py inside models folder
-from models.doubt import get_doubts, get_specific_doubt, create_doubt, update_doubt, delete_doubt
+from doubt import *
 
 @app.route('/doubts', methods=['GET'])
 def _get_doubts():
@@ -24,5 +23,10 @@ def _update_doubt(id):
 def _delete_doubt(id):
   return delete_doubt(id)
 
-if __name__ == '__main__':
-  app.run(debug=True)
+@app.route('/doubts/topics', methods=['GET'])
+def _get_topics():
+  return get_topics()
+
+@app.route('/doubts/topics/<string:topic>', methods=['GET'])
+def _get_doubts_by_topic(topic):
+  return get_doubts_by_topic(topic)
