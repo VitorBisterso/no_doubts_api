@@ -3,10 +3,10 @@ from config import app
 
 from models.user import *
 
-@app.route('/users', methods=['GET'])
-def _is_user_valid():
-  return is_user_valid()
+@app.route('/login', methods=['POST'])
+def _login():
+  return login()
 
-@app.route('/users', methods=['POST'])
+@app.route('/sign_up', methods=['POST'])
 def _create_user():
   return create_user()

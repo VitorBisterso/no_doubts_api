@@ -1,3 +1,8 @@
+from flask_jwt_extended import (
+  create_access_token,
+  create_refresh_token,
+)
+
 from flask import jsonify, request
 from bson.objectid import ObjectId
 from passlib.hash import sha256_crypt
@@ -5,7 +10,7 @@ import json
 
 from utils import get_collection, prepare_user_output
 
-def is_user_valid():
+def login():
   user = request.json.get('user')
   password = request.json.get('password')
 
@@ -14,7 +19,12 @@ def is_user_valid():
   document = documents.find_one(query)
   if document:
     if sha256_crypt.verify(password, sha256_crypt.encrypt(password)):
-      return prepare_user_output(document), 200
+      access_token = create_access_token(identity = document['user'])
+      refresh_token = create_refresh_token(identity = document['user'])
+      return jsonify({
+        'access_token': access_token,
+        'refresh_token': refresh_token
+      })
     else:
       return 'Incorrect password', 401
   else:

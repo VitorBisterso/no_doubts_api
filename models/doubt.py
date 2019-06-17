@@ -16,7 +16,7 @@ def get_doubts():
       'user': document['user'],
     })
 
-  return jsonify({ 'result': output }), 200
+  return jsonify(output), 200
 
 def get_doubts_by_user(doubt = 'NONE'):
   user = request.args.get('user')
@@ -38,7 +38,7 @@ def get_doubts_by_user(doubt = 'NONE'):
           'answer': document['answer'],
           'topic': document['topic'],
         })
-      return jsonify({ 'result': output }), 200
+      return jsonify(output), 200
     else:
       return 'User not found', 404
   else:
@@ -110,7 +110,7 @@ def get_topics_from_user():
       if not document['topic'] in topics:
         topics.append(document['topic'])
 
-    return jsonify({ 'result': topics }), 200
+    return jsonify(topics), 200
   else:
     return 'User not found'
 
@@ -131,6 +131,6 @@ def get_doubts_by_topic_from_user():
         'user': document['user'],
       })
 
-    return jsonify({ 'result': output }), 200
+    return jsonify(output), 200
   else:
     return 'User not found'

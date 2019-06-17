@@ -16,14 +16,14 @@ def prepare_doubt_output(document):
     'topic': document['topic'],
     'user': document['user'],
   }
-  return jsonify({ 'result': output })
+  return jsonify(output)
 
 def prepare_user_output(document):
   output = {
     '_id': str(document['_id']),
     'user': document['user'],
   }
-  return jsonify({ 'result': output })
+  return jsonify(output)
 
 def user_exists(user):
   documents = get_collection('users')
