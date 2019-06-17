@@ -1,4 +1,3 @@
-#Add a config file to run the server
 from config import app
 
 from models.user import *

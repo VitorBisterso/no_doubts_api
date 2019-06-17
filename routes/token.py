@@ -8,7 +8,6 @@ from flask_jwt_extended import (
   get_raw_jwt
 )
 
-#Add a config file to run the server
 from config import app, jwt
 
 blacklist = set()
