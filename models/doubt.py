@@ -99,7 +99,7 @@ def delete_doubt():
     documents.remove(query)
     return 'Accepted', 202
   else:
-    return 'Not found', 404
+    return 'Doubt not found', 404
 
 def get_topics_from_user():
   user = request.args.get('user')
@@ -114,7 +114,7 @@ def get_topics_from_user():
 
     return jsonify(topics), 200
   else:
-    return 'User not found'
+    return 'User not found', 404
 
 def get_doubts_by_topic_from_user():
   user = request.args.get('user')
@@ -135,4 +135,4 @@ def get_doubts_by_topic_from_user():
 
     return jsonify(output), 200
   else:
-    return 'User not found'
+    return 'User not found', 404
