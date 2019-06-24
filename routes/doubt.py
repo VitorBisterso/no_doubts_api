@@ -24,15 +24,15 @@ def _get_specific_doubt_from_user():
 def _create_doubt():
   return create_doubt()
 
-@app.route('/doubts/<string:id>', methods=['PUT'])
+@app.route('/doubts', methods=['PUT'])
 @jwt_required
-def _update_doubt(id):
-  return update_doubt(id)
+def _update_doubt():
+  return update_doubt()
 
-@app.route('/doubts/<string:id>', methods=['DELETE'])
+@app.route('/doubts', methods=['DELETE'])
 @jwt_required
-def _delete_doubt(id):
-  return delete_doubt(id)
+def _delete_doubt():
+  return delete_doubt()
 
 @app.route('/doubts/topics', methods=['GET'])
 @jwt_required

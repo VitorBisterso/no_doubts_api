@@ -21,11 +21,9 @@ def get_doubts():
 def get_doubts_by_user(doubt = 'NONE'):
   user = request.args.get('user')
 
-  query = {}
-  if doubt != 'NONE':
-    query = query = { 'user': user, 'doubt': doubt }
-  else:
-    query = query = { 'user': user }
+  query = { 'user': user }
+  if doubt == 'NONE':
+    query = { 'user': user, 'doubt': doubt }
 
   if isinstance(user, str):
     if user_exists(user):
@@ -70,7 +68,9 @@ def create_doubt():
   else:
     return 'Bad request', 400
 
-def update_doubt(id):
+def update_doubt():
+  id = request.args.get('id')
+
   doubt = request.json.get('doubt')
   answer = request.json.get('answer')
   topic = request.json.get('topic')
@@ -89,7 +89,9 @@ def update_doubt(id):
   else:
     return 'Bad request', 400
 
-def delete_doubt(id):
+def delete_doubt():
+  id = request.args.get('id')
+
   documents = get_collection('doubts')
   query = { '_id': ObjectId(id) }
 
