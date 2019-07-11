@@ -18,7 +18,7 @@ def login():
   documents = get_collection('users')
   document = documents.find_one(query)
   if document:
-    if sha256_crypt.verify(password, sha256_crypt.encrypt(password)):
+    if sha256_crypt.verify(password, document['password']):
       access_token = create_access_token(identity = document['user'])
       refresh_token = create_refresh_token(identity = document['user'])
       return jsonify({
