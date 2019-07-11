@@ -22,7 +22,7 @@ def get_doubts_by_user(doubt = 'NONE'):
   user = request.args.get('user')
 
   query = { 'user': user }
-  if doubt == 'NONE':
+  if doubt != 'NONE':
     query = { 'user': user, 'doubt': doubt }
 
   if isinstance(user, str):
