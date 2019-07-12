@@ -130,7 +130,6 @@ def get_doubts_by_topic_from_user():
         'doubt': document['doubt'],
         'answer': document['answer'],
         'topic': document['topic'],
-        'user': document['user'],
       })
 
     return jsonify(output), 200
